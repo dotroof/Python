@@ -3,24 +3,26 @@ import time
 
 import jwt
 
-service_json_dict = open("./service.json", "r")
-service_json = json.load(service_json_dict)
+if __name__ == "__main__":
 
-headers = {
-    "alg": "RS256",
-    "typ": "JWT"
-}
+    service_json_dict = open("./service.json", "r")
+    service_json = json.load(service_json_dict)
 
-iat = time.time()
-exp = iat + 3600
-payload = {
-    "iss": service_json["client_email"],
-    "scope": "https://www.googleapis.com/auth/androidpublisher",
-    "aud": "https://oauth2.googleapis.com/token",
-    "exp": exp,
-    "iat": iat
-}
+    headers = {
+        "alg": "RS256",
+        "typ": "JWT"
+    }
 
-token = jwt.encode(payload, service_json["private_key"], algorithm="RS256", headers=headers)
+    iat = time.time()
+    exp = iat + 3600
+    payload = {
+        "iss": service_json["client_email"],
+        "scope": "https://www.googleapis.com/auth/androidpublisher",
+        "aud": "https://oauth2.googleapis.com/token",
+        "exp": exp,
+        "iat": iat
+    }
 
-print("jwt: ", token)
+    token = jwt.encode(payload, service_json["private_key"], algorithm="RS256", headers=headers)
+
+    print("jwt: ", token)
